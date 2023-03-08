@@ -1,17 +1,13 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Rendering;
-using UnityEngine.UIElements;
-using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 
 public class Player : MonoBehaviour, IKitchenObjectParent
 {
     [SerializeField] private PlayerInput playerInput;
-    
+
     [SerializeField] private LayerMask counterLayerMask;
+
+    [SerializeField] private LayerMask kitchenObjectLayerMask;
 
     [SerializeField] private Transform pickUpPoint;
 
@@ -25,10 +21,10 @@ public class Player : MonoBehaviour, IKitchenObjectParent
 
     public float height = 2f;
 
-    public float intersectionDistance = .65f; 
+    public float intersectionDistance = .65f;
 
     public float moveSpeed = 5f;
-    
+
     public float rotateSpeed = 10f;
 
     public float jumpForce = 50f;
@@ -51,7 +47,6 @@ public class Player : MonoBehaviour, IKitchenObjectParent
     {
         if (currCounter != null)
             currCounter.Action(this);
-
     }
     private void HandleMovement(Vector3 moveDir)
     {
@@ -97,7 +92,7 @@ public class Player : MonoBehaviour, IKitchenObjectParent
     }
     public void ClearKitchenObject()
     {
-        kitchenObject = null;
+       kitchenObject = null;
     }
     public bool HasKitchenObject()
     {

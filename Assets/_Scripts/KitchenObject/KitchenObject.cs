@@ -6,15 +6,25 @@ using UnityEngine;
 
 public class KitchenObject : MonoBehaviour
 {
-    [SerializeField] private KitchenObjectSO kitchenObjectSO;
+   [SerializeField] Rigidbody rigidBody;
 
-    [SerializeField] Rigidbody rigidBody;
+    public string objectName;
 
     private IKitchenObjectParent parent;
     public void SetParent(IKitchenObjectParent newParent)
     {
         if (parent != null)
-            parent.ClearKitchenObject();
+            parent.SetKitchenObject(null);
+
+        if (newParent == null)
+        {
+            this.parent = null;
+            transform.parent = null;
+            if (rigidBody == null)
+                rigidBody = this.AddComponent<Rigidbody>();
+            return;
+        }
+
         this.parent = newParent;
 
         parent.SetKitchenObject(this);
@@ -25,10 +35,13 @@ public class KitchenObject : MonoBehaviour
         if (parentType == "player" && rigidBody != null)
             Destroy(rigidBody);
         else if (parentType == "counter" && rigidBody == null)
+        {
             rigidBody = this.AddComponent<Rigidbody>();
+            rigidBody.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
+        }
     }
-    public IKitchenObjectParent GetParent()
+    public void Destroy()
     {
-        return this.parent;
+        Destroy(gameObject);
     }
 }
