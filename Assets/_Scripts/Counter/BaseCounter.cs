@@ -14,7 +14,6 @@ public class BaseCounter : MonoBehaviour
 
     protected bool active = false;
     public virtual void Action(Player player) {}
-
     public void SetActive(bool status)
     {
         active = status;
@@ -35,6 +34,7 @@ public class BaseCounter : MonoBehaviour
             if (activeGameObject.GetComponent<Animator>() != null)
                 activeGameObject.GetComponent<Animator>().enabled = false;
         }
+        Debug.Log($"Setting active: {active}");
     }
     public void SetKitchenObject(KitchenObject kitchenObject)
     {

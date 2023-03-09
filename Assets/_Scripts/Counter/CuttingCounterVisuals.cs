@@ -1,8 +1,10 @@
+using System.Collections;
+using UnityEditor;
 using UnityEngine;
 
 public class CuttingCounterVisuals : MonoBehaviour
 {
-    [SerializeField] private ContainerCounter containerCounter;
+    [SerializeField] private CuttingCounter cuttingCounter;
 
     private Animator animator;
 
@@ -13,9 +15,9 @@ public class CuttingCounterVisuals : MonoBehaviour
     }
     private void Start()
     {
-        containerCounter.OnPlayerGrabbedObject += ContainerCounter_OnCuttingKitchenObject;
+        cuttingCounter.OnCuttingFood += ContainerCounter_OnCuttingFood;
     }
-    private void ContainerCounter_OnCuttingKitchenObject(object sender, System.EventArgs e)
+    private void ContainerCounter_OnCuttingFood(object sender, System.EventArgs e)
     {
         animator.SetTrigger(CUT_TRIGGER);
     }
