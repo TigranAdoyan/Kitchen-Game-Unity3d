@@ -1,20 +1,35 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class StoveCounter : BaseCounter, IKitchenObjectParent, ICounter
 {
+    public event EventHandler<OnStateChangedArgs> OnStateChanged;
+    public class OnStateChangedArgs : EventArgs
+    {
+        public bool status;
+        public float timeout;
+    }
+
     [SerializeField] private FryingRecipeSO[] fryingRecipes;
 
+    private Coroutine cookingCoroutine;
     public override void Action(Player player)
     {
-        if (player.HasKitchenObject() && kitchenObject == null)
+        if (player.HasKitchenObject() && GetFryingRecipeOutput(player.GetKitchenObject()) != null && kitchenObject == null)
         {
             player.GetKitchenObject().SetParent(this);
-            StartCoroutine(StartCooking());
+            cookingCoroutine = StartCoroutine(StartCooking());
         } else if (!player.HasKitchenObject() && kitchenObject != null)
         {
             kitchenObject.SetParent(player);
+            if (cookingCoroutine != null)
+            {
+                StopCoroutine(cookingCoroutine);
+                OnStateChanged?.Invoke(this, new OnStateChangedArgs { status = false });
+            }
         }
     }
     IEnumerator StartCooking()
@@ -24,6 +39,7 @@ public class StoveCounter : BaseCounter, IKitchenObjectParent, ICounter
             FryingRecipeSO recipe = GetFryingRecipeOutput(kitchenObject);
             if (recipe != null)
             {
+                OnStateChanged?.Invoke(this, new OnStateChangedArgs { status = true, timeout = recipe.fryingTimerMax });
                 yield return new WaitForSeconds(recipe.fryingTimerMax);
                 kitchenObject.Destroy();
                 ClearKitchenObject();
@@ -35,6 +51,7 @@ public class StoveCounter : BaseCounter, IKitchenObjectParent, ICounter
                 break;
             }
         }
+        OnStateChanged?.Invoke(this, new OnStateChangedArgs { status = false});
     }
     private FryingRecipeSO GetFryingRecipeOutput(KitchenObject kitchenObject)
     {
