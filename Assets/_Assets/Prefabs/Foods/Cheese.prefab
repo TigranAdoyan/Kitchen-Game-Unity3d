@@ -77,6 +77,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rigidBody: {fileID: -3433312837934049719}
+  kitchenObjectSO: {fileID: 11400000, guid: a6021f09c53cbcc44bb7647a3b4f782d, type: 2}
   objectName: Cheese
 --- !u!1001 &123652979240466756
 PrefabInstance:

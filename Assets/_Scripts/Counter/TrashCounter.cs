@@ -10,8 +10,10 @@ public class TrashCounter : BaseCounter, IKitchenObjectParent, ICounter
     [SerializeField] private string objectName;
     public override void Action(Player player)
     {
+        Debug.Log(1);
         if (player.HasKitchenObject())
         {
+            Debug.Log(2);
             player.GetKitchenObject().Destroy();
             player.ClearKitchenObject();
         }

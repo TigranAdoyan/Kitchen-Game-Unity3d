@@ -6,7 +6,9 @@ using UnityEngine;
 
 public class KitchenObject : MonoBehaviour
 {
-   [SerializeField] Rigidbody rigidBody;
+    [SerializeField] Rigidbody rigidBody;
+
+    [SerializeField] KitchenObjectSO kitchenObjectSO;
 
     public string objectName;
 
@@ -43,5 +45,9 @@ public class KitchenObject : MonoBehaviour
     public void Destroy()
     {
         Destroy(gameObject);
+    }
+    public KitchenObjectSO GetKitchenObjectSO()
+    {
+        return kitchenObjectSO;
     }
 }

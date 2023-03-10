@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50d0e60e0ca586547a533a6e73ef91e9, type: 3}
-  m_Name: TomatoSlice
+  m_Script: {fileID: 11500000, guid: 47ac7e4d9ab39484c9683445930edc53, type: 3}
+  m_Name: Frying-Recipe-2
   m_EditorClassIdentifier: 
-  prefab: {fileID: 5042583417781533563, guid: 2d2552f200bb11b429f70d7641b139b1, type: 3}
-  sprite: {fileID: 21300000, guid: c9f08c3c1ae2a364aaeaa3712540b1d4, type: 3}
-  objectName: TomatoSlice
+  input: {fileID: 11400000, guid: e9d17f4acce428c4390faabbdb586dbe, type: 2}
+  output: {fileID: 11400000, guid: 2063c7e7b6deb9e4d8229a4ca80cf48c, type: 2}
+  fryingTimerMax: 3

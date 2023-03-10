@@ -161,6 +161,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rigidBody: {fileID: 8442579736699127530}
+  kitchenObjectSO: {fileID: 11400000, guid: f2860f058e785ff4dac2625071bb6dcc, type: 2}
   objectName: Bread
 --- !u!1 &9113413781067872351
 GameObject:

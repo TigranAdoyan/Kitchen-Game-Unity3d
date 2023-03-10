@@ -1,12 +1,15 @@
 using System;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.UIElements;
+
 
 public class CuttingCounter : BaseCounter, IKitchenObjectParent, ICounter
 {
-    public event EventHandler OnCuttingFood;
+    public event EventHandler<OnCuttingFoodEventArgs> OnCuttingFood;
+    public class OnCuttingFoodEventArgs : EventArgs
+    {
+        public float progressNormalized;
+    }
 
     [SerializeField] private Dictionary<string, KitchenObjectSO> foodToFoodSliceDict = new Dictionary<string, KitchenObjectSO>();
 
@@ -16,9 +19,11 @@ public class CuttingCounter : BaseCounter, IKitchenObjectParent, ICounter
 
     [SerializeField] private KitchenObjectSO cabbageSliceSO;
 
-    [SerializeField] private Image progressBar;
+    [SerializeField] private int progressMax = 5;
 
-    private int cutsCount;
+    private int progressCurrent = 0;
+
+    private bool finished = false;
     private void Start()
     {
         foodToFoodSliceDict.Add("Tomato", tomatoSliceSO);
@@ -28,24 +33,33 @@ public class CuttingCounter : BaseCounter, IKitchenObjectParent, ICounter
     public override void Action(Player player)
     {
         KitchenObject playerKitchenObject = player.GetKitchenObject();
-        if (kitchenObject == null && playerKitchenObject != null && foodToFoodSliceDict.ContainsKey(playerKitchenObject.objectName))
+        if (finished)
+        {
+            kitchenObject.SetParent(player);
+            finished = false;
+        } else if (kitchenObject == null && playerKitchenObject != null && foodToFoodSliceDict.ContainsKey(playerKitchenObject.objectName))
         {
             playerKitchenObject.SetParent(this);
-            cutsCount = 0;
+            progressCurrent = 0;
         } else if (kitchenObject != null && playerKitchenObject == null)
         {
-            if (cutsCount++ <= 5)
+            if (progressCurrent++ < progressMax)
             {
-                progressBar.gameObject = 
-                OnCuttingFood?.Invoke(this, EventArgs.Empty);
-            } else
+                OnCuttingFood.Invoke(this, new OnCuttingFoodEventArgs
+                {
+                    progressNormalized = (float)progressCurrent / progressMax
+                });
+            } 
+
+            if (progressCurrent == progressMax)
             {
                 string currObjectName = kitchenObject.objectName;
                 kitchenObject.Destroy();
                 ClearKitchenObject();
                 Transform kitchenObjectTransform = Instantiate(foodToFoodSliceDict[currObjectName].prefab, counterTopPoint.transform);
                 kitchenObjectTransform.localPosition = Vector3.zero;
-                kitchenObjectTransform.GetComponent<KitchenObject>().SetParent(player);
+                kitchenObjectTransform.GetComponent<KitchenObject>().SetParent(this);
+                finished = true;
             }
         }
     }

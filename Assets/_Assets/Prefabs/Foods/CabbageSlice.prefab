@@ -81,6 +81,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rigidBody: {fileID: 3427984348810972455}
+  kitchenObjectSO: {fileID: 11400000, guid: 04a4da937d6daae49bf787d661916d3c, type: 2}
   objectName: CabbageSlice
 --- !u!1001 &4918300331438457143
 PrefabInstance:

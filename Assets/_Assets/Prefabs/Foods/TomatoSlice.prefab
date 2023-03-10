@@ -79,6 +79,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rigidBody: {fileID: 2969619013339852322}
+  kitchenObjectSO: {fileID: 11400000, guid: d34d800357c8b1d4a86646f2dcc47d93, type: 2}
   objectName: TomatoSlice
 --- !u!1001 &2974177005145496783
 PrefabInstance:
