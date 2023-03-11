@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class StoveCounterVisuals : MonoBehaviour
@@ -8,14 +6,13 @@ public class StoveCounterVisuals : MonoBehaviour
 
     [SerializeField] private GameObject particlesOnGameObject;
 
-    [SerializeField] private StoveCounter stoveCounter;
+    [SerializeField] private StoveCounter counter;
 
     private void Start()
     {
-        stoveCounter.OnStateChanged += StoveCounter_OnStateChanged;
+        counter.OnProgressEvent += Counter_OnProgressUI;
     }
-
-    private void StoveCounter_OnStateChanged(object sender, StoveCounter.OnStateChangedArgs e)
+    private void Counter_OnProgressUI(object sender, ICounterProgressUI.OnProgressEventArgs e)
     {
         stoveOnGameObject.SetActive(e.status);
         particlesOnGameObject.SetActive(e.status);

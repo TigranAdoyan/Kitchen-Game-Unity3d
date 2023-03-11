@@ -34,7 +34,6 @@ public class BaseCounter : MonoBehaviour
             if (activeGameObject.GetComponent<Animator>() != null)
                 activeGameObject.GetComponent<Animator>().enabled = false;
         }
-        Debug.Log($"Setting active: {active}");
     }
     public void SetKitchenObject(KitchenObject kitchenObject)
     {

@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class CuttingCounter : BaseCounter, IKitchenObjectParent, ICounter
+public class CuttingCounter : BaseCounter, IKitchenObjectParent, ICounterProgressUI, ICounter
 {
-    public event EventHandler<OnCuttingFoodEventArgs> OnCuttingFood;
-    public class OnCuttingFoodEventArgs : EventArgs
-    {
-        public float progressNormalized;
-    }
+    public event EventHandler<ICounterProgressUI.OnProgressEventArgs> OnProgressEvent;
+
+    public event EventHandler<EventArgs> OnCuttingEvent;
 
     [SerializeField] private Dictionary<string, KitchenObjectSO> foodToFoodSliceDict = new Dictionary<string, KitchenObjectSO>();
 
@@ -45,10 +43,12 @@ public class CuttingCounter : BaseCounter, IKitchenObjectParent, ICounter
         {
             if (progressCurrent++ < progressMax)
             {
-                OnCuttingFood.Invoke(this, new OnCuttingFoodEventArgs
+                OnProgressEvent?.Invoke(this, new ICounterProgressUI.OnProgressEventArgs
                 {
-                    progressNormalized = (float)progressCurrent / progressMax
+                    auto = false,
+                    value = (float)progressCurrent / progressMax
                 });
+                OnCuttingEvent?.Invoke(this, EventArgs.Empty);
             } 
 
             if (progressCurrent == progressMax)

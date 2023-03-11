@@ -15,9 +15,9 @@ public class CuttingCounterVisuals : MonoBehaviour
     }
     private void Start()
     {
-        cuttingCounter.OnCuttingFood += ContainerCounter_OnCuttingFood;
+        cuttingCounter.OnCuttingEvent += ContainerCounter_OnCuttingEvent;
     }
-    private void ContainerCounter_OnCuttingFood(object sender, System.EventArgs e)
+    private void ContainerCounter_OnCuttingEvent(object sender, System.EventArgs e)
     {
         animator.SetTrigger(CUT_TRIGGER);
     }

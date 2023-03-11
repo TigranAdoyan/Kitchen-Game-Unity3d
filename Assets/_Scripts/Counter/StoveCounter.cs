@@ -1,17 +1,10 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-
-public class StoveCounter : BaseCounter, IKitchenObjectParent, ICounter
+public class StoveCounter : BaseCounter, IKitchenObjectParent, ICounterProgressUI, ICounter
 {
-    public event EventHandler<OnStateChangedArgs> OnStateChanged;
-    public class OnStateChangedArgs : EventArgs
-    {
-        public bool status;
-        public float timeout;
-    }
+    public event EventHandler<ICounterProgressUI.OnProgressEventArgs> OnProgressEvent;
 
     [SerializeField] private FryingRecipeSO[] fryingRecipes;
 
@@ -28,7 +21,7 @@ public class StoveCounter : BaseCounter, IKitchenObjectParent, ICounter
             if (cookingCoroutine != null)
             {
                 StopCoroutine(cookingCoroutine);
-                OnStateChanged?.Invoke(this, new OnStateChangedArgs { status = false });
+                OnProgressEvent?.Invoke(this, new ICounterProgressUI.OnProgressEventArgs { auto = true, status = false });
             }
         }
     }
@@ -39,7 +32,7 @@ public class StoveCounter : BaseCounter, IKitchenObjectParent, ICounter
             FryingRecipeSO recipe = GetFryingRecipeOutput(kitchenObject);
             if (recipe != null)
             {
-                OnStateChanged?.Invoke(this, new OnStateChangedArgs { status = true, timeout = recipe.fryingTimerMax });
+                OnProgressEvent?.Invoke(this, new ICounterProgressUI.OnProgressEventArgs { auto = true, status = true, timeout = recipe.fryingTimerMax });
                 yield return new WaitForSeconds(recipe.fryingTimerMax);
                 kitchenObject.Destroy();
                 ClearKitchenObject();
@@ -47,11 +40,9 @@ public class StoveCounter : BaseCounter, IKitchenObjectParent, ICounter
                 kitchenObjectTransform.localPosition = Vector3.zero;
                 kitchenObjectTransform.GetComponent<KitchenObject>().SetParent(this);
             } else
-            {
                 break;
-            }
         }
-        OnStateChanged?.Invoke(this, new OnStateChangedArgs { status = false});
+        OnProgressEvent?.Invoke(this, new ICounterProgressUI.OnProgressEventArgs { auto = true, status = false });
     }
     private FryingRecipeSO GetFryingRecipeOutput(KitchenObject kitchenObject)
     {
