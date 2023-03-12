@@ -1,7 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 public class ClearCounter : BaseCounter, IKitchenObjectParent, ICounter
@@ -13,15 +9,32 @@ public class ClearCounter : BaseCounter, IKitchenObjectParent, ICounter
     {
         if (player.HasKitchenObject())
         {
-            if (kitchenObject != null && player.GetKitchenObject() is PlateKitchenObject)
-            {
-                PlateKitchenObject plateKitchenObject = player.GetKitchenObject() as PlateKitchenObject;
-                plateKitchenObject.AddFood(player.GetKitchenObject().GetKitchenObjectSO());
-                kitchenObject.Destroy();
-            } else if (player.GetKitchenObject() is KitchenObject)
+            if (kitchenObject == null)
             {
                 player.GetKitchenObject().SetParent(this);
+            } else if (kitchenObject is PlateKitchenObject plateKitchen && player.GetKitchenObject() is not PlateKitchenObject)
+            {
+                KitchenObject playerKitchen = player.GetKitchenObject();
+                bool added = plateKitchen.TryAddFood(playerKitchen.GetKitchenObjectSO());
+                if (added)
+                {
+                    player.ClearKitchenObject();
+                    playerKitchen.Destroy();
+                }
+
+            } else if (kitchenObject is not PlateKitchenObject && player.GetKitchenObject() is PlateKitchenObject)
+            {
+                PlateKitchenObject playerKitchen = player.GetKitchenObject() as PlateKitchenObject;
+                bool added = playerKitchen.TryAddFood(kitchenObject.GetKitchenObjectSO());
+                if (added)
+                {
+                    kitchenObject.Destroy();
+                    ClearKitchenObject();
+                }
             }
+        } else if (kitchenObject != null)
+        {
+            kitchenObject.SetParent(player);
         }
     }
 }

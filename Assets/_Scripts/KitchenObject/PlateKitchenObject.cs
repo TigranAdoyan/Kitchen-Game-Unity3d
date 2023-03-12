@@ -1,19 +1,33 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.Rendering;
+using System.Diagnostics;
+using System.Linq;
 using UnityEngine;
 
 public class PlateKitchenObject : KitchenObject
 {
+    public event EventHandler<OnAddFoodEventArgs> OnAddFoodEvent;
+    public class OnAddFoodEventArgs : EventArgs
+    {
+        public KitchenObjectSO kitchenObjectSO;
+    }
+
+    [SerializeField] private List<KitchenObjectSO> validFoods;
+
     private List<KitchenObjectSO> kitchenObjectSOList;
 
     private void Awake()
     {
         kitchenObjectSOList = new List<KitchenObjectSO>();
     }
-    public void AddFood(KitchenObjectSO kitchenObjectSO)
+    public bool TryAddFood(KitchenObjectSO kitchenObjectSO)
     {
-        kitchenObjectSOList.Add(kitchenObjectSO);
+        if (validFoods.Contains(kitchenObjectSO) && !kitchenObjectSOList.Contains(kitchenObjectSO))
+        {
+            OnAddFoodEvent?.Invoke(this, new OnAddFoodEventArgs { kitchenObjectSO = kitchenObjectSO });
+            kitchenObjectSOList.Add(kitchenObjectSO);
+            return true;
+        }
+        return false;
     }
 }
