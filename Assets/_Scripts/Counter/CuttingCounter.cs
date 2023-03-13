@@ -33,13 +33,28 @@ public class CuttingCounter : BaseCounter, IKitchenObjectParent, ICounterProgres
         KitchenObject playerKitchenObject = player.GetKitchenObject();
         if (finished)
         {
-            kitchenObject.SetParent(player);
+            if (player.GetKitchenObject() is PlateKitchenObject)
+            {
+                PlateKitchenObject playerKitchen = player.GetKitchenObject() as PlateKitchenObject;
+                bool added = playerKitchen.TryAddFood(kitchenObject.GetKitchenObjectSO());
+                if (added)
+                {
+                    kitchenObject.Destroy();
+                    ClearKitchenObject();
+                }
+            }
+            else
+            {
+                kitchenObject.SetParent(player);
+            }
             finished = false;
-        } else if (kitchenObject == null && playerKitchenObject != null && foodToFoodSliceDict.ContainsKey(playerKitchenObject.objectName))
+        }
+        else if (kitchenObject == null && playerKitchenObject != null && foodToFoodSliceDict.ContainsKey(playerKitchenObject.objectName))
         {
             playerKitchenObject.SetParent(this);
             progressCurrent = 0;
-        } else if (kitchenObject != null && playerKitchenObject == null)
+        }
+        else if (kitchenObject != null && playerKitchenObject == null)
         {
             if (progressCurrent++ < progressMax)
             {
@@ -49,7 +64,7 @@ public class CuttingCounter : BaseCounter, IKitchenObjectParent, ICounterProgres
                     value = (float)progressCurrent / progressMax
                 });
                 OnCuttingEvent?.Invoke(this, EventArgs.Empty);
-            } 
+            }
 
             if (progressCurrent == progressMax)
             {

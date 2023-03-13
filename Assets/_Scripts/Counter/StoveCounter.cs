@@ -11,7 +11,16 @@ public class StoveCounter : BaseCounter, IKitchenObjectParent, ICounterProgressU
     private Coroutine cookingCoroutine;
     public override void Action(Player player)
     {
-        if (player.HasKitchenObject() && GetFryingRecipeOutput(player.GetKitchenObject()) != null && kitchenObject == null)
+        if (player.HasKitchenObject() && player.GetKitchenObject() is PlateKitchenObject && kitchenObject != null)
+        {
+            PlateKitchenObject playerKitchen = player.GetKitchenObject() as PlateKitchenObject;
+            bool added = playerKitchen.TryAddFood(kitchenObject.GetKitchenObjectSO());
+            if (added)
+            {
+                kitchenObject.Destroy();
+                ClearKitchenObject();
+            }
+        } else if (player.HasKitchenObject() && GetFryingRecipeOutput(player.GetKitchenObject()) != null && kitchenObject == null)
         {
             player.GetKitchenObject().SetParent(this);
             cookingCoroutine = StartCoroutine(StartCooking());
