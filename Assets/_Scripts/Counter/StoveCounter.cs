@@ -43,11 +43,14 @@ public class StoveCounter : BaseCounter, IKitchenObjectParent, ICounterProgressU
             {
                 OnProgressEvent?.Invoke(this, new ICounterProgressUI.OnProgressEventArgs { auto = true, status = true, timeout = recipe.fryingTimerMax });
                 yield return new WaitForSeconds(recipe.fryingTimerMax);
-                kitchenObject.Destroy();
-                ClearKitchenObject();
-                Transform kitchenObjectTransform = Instantiate(recipe.output.prefab, counterTopPoint.transform);
-                kitchenObjectTransform.localPosition = Vector3.zero;
-                kitchenObjectTransform.GetComponent<KitchenObject>().SetParent(this);
+                if (kitchenObject != null)
+                {
+                    kitchenObject.Destroy();
+                    ClearKitchenObject();
+                    Transform kitchenObjectTransform = Instantiate(recipe.output.prefab, counterTopPoint.transform);
+                    kitchenObjectTransform.localPosition = Vector3.zero;
+                    kitchenObjectTransform.GetComponent<KitchenObject>().SetParent(this);
+                }
             } else
                 break;
         }

@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60aa513a14c316e498ebbe16223b914a, type: 3}
+  m_Name: MegaBurger
+  m_EditorClassIdentifier: Assembly-CSharp::ReipeSO
+  kitchenObjectsSOList:
+  - {fileID: 11400000, guid: 04a4da937d6daae49bf787d661916d3c, type: 2}
+  - {fileID: 11400000, guid: 20c9df171d7f51845957e2110ba635eb, type: 2}
+  - {fileID: 11400000, guid: d34d800357c8b1d4a86646f2dcc47d93, type: 2}
+  - {fileID: 11400000, guid: f2860f058e785ff4dac2625071bb6dcc, type: 2}
+  - {fileID: 11400000, guid: e9d17f4acce428c4390faabbdb586dbe, type: 2}
+  resipeName: MegaBurger

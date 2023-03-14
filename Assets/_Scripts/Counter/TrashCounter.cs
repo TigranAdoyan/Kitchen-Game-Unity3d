@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class TrashCounter : BaseCounter, IKitchenObjectParent, ICounter
 {
-    public event EventHandler OnPlayerGrabbedObject;
-
     [SerializeField] protected KitchenObjectSO kitchenObjectSO;
 
     [SerializeField] private string objectName;

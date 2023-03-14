@@ -9,8 +9,12 @@ public class DeliveryCounter : BaseCounter, IKitchenObjectParent, ICounter
     {
         if (player.HasKitchenObject() && player.GetKitchenObject() is PlateKitchenObject) 
         {
-            player.GetKitchenObject().SetParent(this);
-            StartCoroutine(StartDelivering());
+            bool delivered = DeliveryManager.Instance.DeliverResipe(player.GetKitchenObject() as PlateKitchenObject);
+            if (delivered)
+            {
+                player.GetKitchenObject().SetParent(this);
+                StartCoroutine(StartDelivering());
+            }
         }
     }
     private void Update()
