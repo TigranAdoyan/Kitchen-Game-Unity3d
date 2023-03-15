@@ -8,8 +8,6 @@ public class PlateKitchenObjectVisual : MonoBehaviour
     [SerializeField] private PlateKitchenObject plateKitchenObject;
 
     [SerializeField] private List<KitchenObjectSO_Object> plateKitchenObjectSOGameObject;
-
-    [Serializable]
     public struct KitchenObjectSO_Object
     {
         public KitchenObjectSO kitchenObjectSO;

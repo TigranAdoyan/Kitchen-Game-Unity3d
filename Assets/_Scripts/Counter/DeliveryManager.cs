@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -14,9 +15,7 @@ public class DeliveryManager : MonoBehaviour
 
     public List<ResipeSO> waitingResipeSOList;
 
-    private float spawnResipeTimer;
-
-    private float spawnResipeTimerMax = 4f;
+    private float spawnResipeTimer = 4f;
 
     private int waitingResipesMaxCount = 4;
 
@@ -24,18 +23,18 @@ public class DeliveryManager : MonoBehaviour
     {
         waitingResipeSOList = new List<ResipeSO>();
         Instance = this;
+        StartCoroutine(StartDeliveryMangementLoop());
     }
-    private void Update()
+    IEnumerator StartDeliveryMangementLoop()
     {
-        spawnResipeTimer -= Time.deltaTime; 
-        if (spawnResipeTimer <= 0f) {
-            spawnResipeTimer = spawnResipeTimerMax;
+        while (true)
+        {
+            yield return new WaitForSeconds(spawnResipeTimer);
             if (waitingResipeSOList.Count < waitingResipesMaxCount)
             {
                 ResipeSO rso = resipeListSO.resipeSOList[Random.Range(0, resipeListSO.resipeSOList.Count)];
-                Debug.Log(rso.name);
-                OnEvent?.Invoke(this, EventArgs.Empty);
                 waitingResipeSOList.Add(rso);
+                OnEvent?.Invoke(this, EventArgs.Empty);
             }
         }
     }
@@ -72,6 +71,7 @@ public class DeliveryManager : MonoBehaviour
             {
                 Debug.Log("Delivered correct resipe");
                 waitingResipeSOList.RemoveAt(i);
+                OnEvent?.Invoke(this, EventArgs.Empty);
                 return true;
             }
         }
