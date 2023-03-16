@@ -990,6 +990,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e9d17f4acce428c4390faabbdb586dbe, type: 2}
   - {fileID: 11400000, guid: f2860f058e785ff4dac2625071bb6dcc, type: 2}
   - {fileID: 11400000, guid: 2063c7e7b6deb9e4d8229a4ca80cf48c, type: 2}
+  kitchenObjectSOList: []
 --- !u!114 &1706699295499227478
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1003,19 +1004,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plateKitchenObject: {fileID: 4074125652441020419}
-  plateKitchenObjectSOGameObject:
-  - kitchenObjectSO: {fileID: 11400000, guid: f2860f058e785ff4dac2625071bb6dcc, type: 2}
-    gameObject: {fileID: 4110482994125818524}
-  - kitchenObjectSO: {fileID: 11400000, guid: d34d800357c8b1d4a86646f2dcc47d93, type: 2}
-    gameObject: {fileID: 5513615911054690820}
-  - kitchenObjectSO: {fileID: 11400000, guid: 04a4da937d6daae49bf787d661916d3c, type: 2}
-    gameObject: {fileID: 6374503474946237071}
-  - kitchenObjectSO: {fileID: 11400000, guid: 20c9df171d7f51845957e2110ba635eb, type: 2}
-    gameObject: {fileID: 4648418121429313847}
-  - kitchenObjectSO: {fileID: 11400000, guid: e9d17f4acce428c4390faabbdb586dbe, type: 2}
-    gameObject: {fileID: 3037593633818863680}
-  - kitchenObjectSO: {fileID: 11400000, guid: 2063c7e7b6deb9e4d8229a4ca80cf48c, type: 2}
-    gameObject: {fileID: 3640242827391821720}
 --- !u!1 &6254687944926486721
 GameObject:
   m_ObjectHideFlags: 0

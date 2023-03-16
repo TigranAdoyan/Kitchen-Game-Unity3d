@@ -15,6 +15,7 @@ public class PlateKitchenObjectVisual : MonoBehaviour
     }
     private void Start()
     {
+        plateKitchenObjectSOGameObject = new List<KitchenObjectSO_Object>();
         plateKitchenObject.OnAddFoodEvent += PlateKitchenObject_OnAddFoodEvent;
     }
 

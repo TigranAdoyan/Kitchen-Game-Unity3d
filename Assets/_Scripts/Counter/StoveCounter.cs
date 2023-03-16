@@ -59,7 +59,7 @@ public class StoveCounter : BaseCounter, IKitchenObjectParent, ICounterProgressU
     private FryingRecipeSO GetFryingRecipeOutput(KitchenObject kitchenObject)
     {
         foreach (FryingRecipeSO fryingRecipeSO in fryingRecipes)
-            if (kitchenObject.GetKitchenObjectSO() == fryingRecipeSO.input)
+            if (kitchenObject != null && kitchenObject.GetKitchenObjectSO() == fryingRecipeSO.input)
                 return fryingRecipeSO;
         return null;
     }

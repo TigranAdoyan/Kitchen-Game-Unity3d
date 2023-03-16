@@ -11,6 +11,12 @@ public class DeliveryManager : MonoBehaviour
 
     public event EventHandler OnEvent;
 
+    public event EventHandler OnResipeComplited;
+
+    public event EventHandler OnResipeSuccess;
+    
+    public event EventHandler OnResipeFail;
+
     [SerializeField] private ResipeListSO resipeListSO;
 
     public List<ResipeSO> waitingResipeSOList;
@@ -72,10 +78,15 @@ public class DeliveryManager : MonoBehaviour
                 Debug.Log("Delivered correct resipe");
                 waitingResipeSOList.RemoveAt(i);
                 OnEvent?.Invoke(this, EventArgs.Empty);
+                OnResipeComplited?.Invoke(this, EventArgs.Empty);
+                OnResipeSuccess?.Invoke(this, EventArgs.Empty);
                 return true;
             }
         }
+
         Debug.Log("Wrong Delivery");
+        OnResipeComplited?.Invoke(this, EventArgs.Empty);
+        OnResipeFail?.Invoke(this, EventArgs.Empty);
         return false;
     }        
  }
