@@ -3,6 +3,12 @@ using UnityEngine;
 
 public class Player : MonoBehaviour, IKitchenObjectParent
 {
+    public static Player Instance { get; private set; }
+
+    public event EventHandler OnPickUp;
+
+    public event EventHandler OnDrop;
+
     [SerializeField] private PlayerInput playerInput;
 
     [SerializeField] private LayerMask counterLayerMask;
@@ -30,6 +36,10 @@ public class Player : MonoBehaviour, IKitchenObjectParent
     public float jumpForce = 50f;
 
     private bool isWalking = false;
+    private void Awake()
+    {
+        Instance = this;
+    }
     private void Start()
     {
         rigidBody = GetComponent<Rigidbody>();
@@ -84,6 +94,7 @@ public class Player : MonoBehaviour, IKitchenObjectParent
     }
     public void SetKitchenObject(KitchenObject kitchenObject)
     {
+        OnPickUp?.Invoke(this, EventArgs.Empty);
         this.kitchenObject = kitchenObject;
     }
     public KitchenObject GetKitchenObject()
@@ -92,7 +103,8 @@ public class Player : MonoBehaviour, IKitchenObjectParent
     }
     public void ClearKitchenObject()
     {
-       kitchenObject = null;
+        OnDrop?.Invoke(this, EventArgs.Empty);
+        kitchenObject = null;
     }
     public bool HasKitchenObject()
     {

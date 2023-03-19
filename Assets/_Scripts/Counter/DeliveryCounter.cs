@@ -5,6 +5,11 @@ using UnityEngine;
 
 public class DeliveryCounter : BaseCounter, IKitchenObjectParent, ICounter
 {
+    public static DeliveryCounter Instance;
+    private void Awake()
+    {
+        Instance = this;
+    }
     public override void Action(Player player)
     {
         if (player.HasKitchenObject() && player.GetKitchenObject() is PlateKitchenObject) 
