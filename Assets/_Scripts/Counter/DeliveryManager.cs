@@ -22,6 +22,8 @@ public class DeliveryManager : MonoBehaviour
 
     private int waitingResipesMaxCount = 4;
 
+    public int deliveredRecipesCount = 0;
+
     private void Awake()
     {
         waitingResipeSOList = new List<ResipeSO>();
@@ -76,6 +78,7 @@ public class DeliveryManager : MonoBehaviour
                 waitingResipeSOList.RemoveAt(i);
                 OnEvent?.Invoke(this, EventArgs.Empty);
                 OnResipeSuccess?.Invoke(this, EventArgs.Empty);
+                deliveredRecipesCount++;
                 return true;
             }
         }

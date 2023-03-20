@@ -55,11 +55,13 @@ public class Player : MonoBehaviour, IKitchenObjectParent
     }
     private void GameInput_OnAction(object sender, EventArgs args)
     {
-        if (currCounter != null)
+        if (currCounter != null && KitchenGameManager.Instance.IsGamePlaying() && !KitchenGameManager.Instance.IsGameOver())
             currCounter.Action(this);
     }
     private void HandleMovement(Vector3 moveDir)
     {
+        if (!KitchenGameManager.Instance.IsGamePlaying()) return;
+
         transform.position += moveDir * moveSpeed * Time.deltaTime;
 
         isWalking = moveDir != Vector3.zero;
