@@ -3452,6 +3452,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bee8cb5ed4a5a8478c55f192f329581, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gamePlayingTimerMax: 20
 --- !u!1 &1469055218 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4241719575218519406, guid: 69d8865289cc18c4e992eaf085ebe531,
@@ -3517,7 +3518,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d75b8cd489175314aa7f8880ec24c50f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deliveredRecipesCountText: {fileID: 0}
+  deliveredRecipesCountText: {fileID: 1432276873}
 --- !u!1 &1551185652 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4353458339568211516, guid: 176f5a8de4782b94788242866f2d6567,

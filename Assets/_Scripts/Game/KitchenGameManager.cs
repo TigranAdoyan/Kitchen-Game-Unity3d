@@ -8,6 +8,14 @@ public class KitchenGameManager : MonoBehaviour
     public static KitchenGameManager Instance { get; private set; }
 
     public event EventHandler<EventArgs> OnStateChange;
+
+    [SerializeField] private float gamePlayingTimerMax = 20f;
+
+    private float gamePlayingTimer;
+
+    private float waitingToStateTimer = 1f;
+
+    private float countDownToStateTimer = 3f;
     public enum State
     {
         WaitingToStart,
@@ -17,14 +25,6 @@ public class KitchenGameManager : MonoBehaviour
     }
 
     private State state;
-
-    private float waitingToStateTimer = 1f;
-
-    private float countDownToStateTimer = 3f;
-
-    private float gamePlayingTimerMax = 10f;
-
-    private float gamePlayingTimer;
     private void Awake()
     {
         Instance = this;
