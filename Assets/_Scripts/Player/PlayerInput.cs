@@ -12,14 +12,19 @@ public class PlayerInput : MonoBehaviour
     {
         playerInputActions = new PlayerInputActions();
         playerInputActions.Player.Enable();
-        playerInputActions.Player.Action.performed += Action_performed;
+        playerInputActions.Player.Action.performed += Action;
+        playerInputActions.Player.Pause.performed += Pause;   
     }
-    private void Action_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    private void Action(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
         if (obj.phase == UnityEngine.InputSystem.InputActionPhase.Performed && OnAction != null)
         {
             OnAction(this, EventArgs.Empty);
         }
+    }
+    private void Pause(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        KitchenGameManager.Instance.SetPauseStatus(!KitchenGameManager.Instance.IsPaused());
     }
     public Vector2 MovementVector(bool normalized)
     {

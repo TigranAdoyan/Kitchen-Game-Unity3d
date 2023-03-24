@@ -9,6 +9,8 @@ public class KitchenGameManager : MonoBehaviour
 
     public event EventHandler<EventArgs> OnStateChange;
 
+    public event EventHandler<EventArgs> OnPauseChange;
+
     [SerializeField] private float gamePlayingTimerMax = 20f;
 
     private float gamePlayingTimer;
@@ -25,6 +27,8 @@ public class KitchenGameManager : MonoBehaviour
     }
 
     private State state;
+
+    private bool isPaused = false;
     private void Awake()
     {
         Instance = this;
@@ -32,6 +36,8 @@ public class KitchenGameManager : MonoBehaviour
     }
     private void Update()
     {
+        if (isPaused) return;
+
         switch (state)
         {
             case State.WaitingToStart:
@@ -62,7 +68,6 @@ public class KitchenGameManager : MonoBehaviour
             case State.GameOver:
                 break;
         }
-        Debug.Log(state);
     }
     public bool IsGamePlaying()
     {
@@ -80,8 +85,23 @@ public class KitchenGameManager : MonoBehaviour
     {
         return countDownToStateTimer;
     }
+    public float GetRemainedPlayingTime()
+    {
+        return gamePlayingTimer;
+    }
     public float GetPlayingTimeNormalized()
     {
         return 1 - gamePlayingTimer / gamePlayingTimerMax;
+    }
+    public void SetPauseStatus(bool pauseStatus)
+    {
+        isPaused = pauseStatus;
+        OnPauseChange?.Invoke(this, new EventArgs());
+        if (isPaused) Time.timeScale = 0f;
+        else Time.timeScale = 1f;
+    }
+    public bool IsPaused()
+    {
+        return isPaused;
     }
 }

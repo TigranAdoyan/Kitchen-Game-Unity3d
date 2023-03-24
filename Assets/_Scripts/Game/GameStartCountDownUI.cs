@@ -6,7 +6,6 @@ using UnityEngine;
 public class GameStartCountDownUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI countDownText;
-
     private void Start()
     {
         gameObject.SetActive(false);

@@ -7,6 +7,8 @@ public class SoundManager : MonoBehaviour
     public static SoundManager Instance { get; private set; }
 
     [SerializeField] private AudioClipRefsSO audioClipsRefs;
+
+    private float volume = .5f;
     private void Awake()
     {
         Instance = this;
@@ -20,7 +22,18 @@ public class SoundManager : MonoBehaviour
         CuttingCounter.OnAnyCuttingEvent += CuttingCounter_OnAnyCuttingEvent;
         TrashCounter.OnAnyObjectTrash += TrashCounter_OnAnyObjectTrash;
     }
-
+    public float AddVolume()
+    {
+        volume += .1f;
+        if (volume > 1f)
+            volume = .1f;
+        
+        return volume;
+    }
+    public float GetVolume()
+    {
+        return volume;
+    }
     private void TrashCounter_OnAnyObjectTrash(object sender, System.EventArgs e)
     {
         TrashCounter trashCounter = (TrashCounter)sender;
@@ -50,9 +63,9 @@ public class SoundManager : MonoBehaviour
     }
     public void PlayPlayerFootSteps(Vector3 position)
     {
-        PlaySound(audioClipsRefs.footStep, position, .5f);
+        PlaySound(audioClipsRefs.footStep, position);
     }
-    private void PlaySound(AudioClip[] audioClips, Vector3 position, float volume = 1f)
+    private void PlaySound(AudioClip[] audioClips, Vector3 position)
     {
         AudioSource.PlayClipAtPoint(audioClips[Random.Range(0, audioClips.Length)], position, volume);   
     }
